@@ -23,7 +23,7 @@ public struct SentimentAlertConfiguration {
     var options: [SentimentAlertOption]
     
     /// Create a new `SentimentAlertConfiguration`
-    public init(_ identifier: String, title: String, details: String, options: [SentimentAlertOption]) {
+    public init(identifier: String, title: String, details: String, options: [SentimentAlertOption]) {
         self.identifier = identifier
         self.title = title
         self.details = details
