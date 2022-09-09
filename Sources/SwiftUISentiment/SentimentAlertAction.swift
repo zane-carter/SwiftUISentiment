@@ -12,15 +12,17 @@ import SwiftUI
 public enum SentimentAlertAction: Identifiable {
     /// Open the Twitter app to the given account `handle`
     /// If the Twitter app is not available, the user is taken to the Twitter profile URL in safari
-    case twitter(_ name: String, handle: String)
+    case twitter(_ label: String, handle: String)
     /// Navigate the user to the given `url` in the the external Safari App
-    case website(_ name: String, url: URL)
+    case website(_ label: String, url: URL)
     /// Navigates the user to their email client, sending an email to the given `address` string
-    case email(_ name: String, address: String)
+    case email(_ label: String, address: String)
     /// Navigates the user to the apps AppStore page and writes a review (if available)
-    case review(_ name: String, appId: String)
+    case review(_ label: String, appId: String)
     /// Performs a custom action
-    case custom(_ name: String, action: () -> Void)
+    case custom(_ label: String, action: () -> Void)
+    /// Close the action list
+    case close(_ label: String)
 
     /// The `rawValue`
     private var rawValue: String {
@@ -29,28 +31,29 @@ public enum SentimentAlertAction: Identifiable {
         case .email(_, address: let address): return "email-\(address)"
         case .website(_, url: let url): return "website-\(url.absoluteString)"
         case .review(_, appId: let appId): return "review-\(appId)"
-        case .custom(let name, action: _): return name
+        case .custom(let label, action: _), .close(let label): return label
         }
     }
 
     /// The `id` used to identify this `SentimentAlertAction`
     public var id: String { rawValue }
 
-    /// The name to display in the alert for this `SentimentAlertAction` button
-    public var name: String {
+    /// The label to display in the alert for this `SentimentAlertAction` button
+    public var label: String {
         switch self {
-        case .twitter(let name, handle: _): return name
-        case .email(let name, address: _): return name
-        case .website(let name, url: _): return name
-        case .review(let name, appId: _): return name
-        case .custom(let name, action: _): return name
+        case .twitter(let label, handle: _): return label
+        case .email(let label, address: _): return label
+        case .website(let label, url: _): return label
+        case .review(let label, appId: _): return label
+        case .custom(let label, action: _): return label
+        case .close(let label): return label
         }
     }
 }
 
 // MARK: Actions
 extension SentimentAlertAction {
-    /// Execute the appropriate action or ULR open for this `SentimentAlertAction`
+    /// Execute the appropriate action for this `SentimentAlertAction`
     func execute() {
         let application = UIApplication.shared
 
@@ -80,6 +83,9 @@ extension SentimentAlertAction {
 
         case .custom(_, action: let action):
             action()
+
+        case .close(_):
+            return
         }
     }
 }

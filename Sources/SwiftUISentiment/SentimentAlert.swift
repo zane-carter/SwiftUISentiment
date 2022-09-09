@@ -16,18 +16,19 @@ struct SentimentAlert<Content: View>: View {
     /// The parent view
     var content: Content
 
-    /// Used internally for presenting the second step of the sentiment alerts
+    /// Used internally for presenting the actions associated with the selected option
     @State private var optionPresented = false
-    /// The option to use for the secondary alert
+    /// The option the user has selected
     @State private var option: SentimentAlertOption?
 
     var body: some View {
         content
             /// The secondary step showing an option and its various action
-            .alert(option?.title ?? "", isPresented: $optionPresented, presenting: option, actions: { option in
+            .alert(option?.label ?? "", isPresented: $optionPresented, presenting: option, actions: { option in
                 ForEach(option.actions) { action in
-                    Button(action: { action.execute() }) {
-                        Text(action.name)
+                    switch action {
+                    case .close(_): Button(role: .cancel, action: {}, label: { Text(action.label) })
+                    default: Button(role: .none, action: { action.execute() }, label: { Text(action.label)})
                     }
                 }
             })
@@ -40,11 +41,15 @@ struct SentimentAlert<Content: View>: View {
                         Button(
                             action: {
                                 DispatchQueue.main.async {
+                                    option.selected()
                                     self.option = option
-                                    self.optionPresented = true
+                                    /// If there is atleast 1 secondary action, present the list of actions
+                                    if !option.actions.isEmpty {
+                                        self.optionPresented = true
+                                    }
                                 }
                             },
-                            label: { Text(option.title) }
+                            label: { Text(option.label) }
                         )
                     }
                 },
