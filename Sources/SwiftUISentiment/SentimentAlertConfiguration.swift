@@ -21,6 +21,14 @@ public struct SentimentAlertConfiguration {
     var details: String
     /// A set of  `SentimentAlertOption`s to display
     var options: [SentimentAlertOption]
+    
+    /// Create a new `SentimentAlertConfiguration`
+    public init(_ identifier: String, title: String, details: String, options: [SentimentAlertOption]) {
+        self.identifier = identifier
+        self.title = title
+        self.details = details
+        self.options = options
+    }
 }
 
 
@@ -37,4 +45,11 @@ public struct SentimentAlertOption: Identifiable {
 
     /// The identifier for the `SentimentAlertOption`
     public var id: String { title }
+    
+    /// Create a new `SentimentAlertOption`
+    public init(title: String, actions: [SentimentAlertAction], selected: @escaping () -> Void = {}) {
+        self.title = title
+        self.actions = actions
+        self.selected = selected
+    }
 }
