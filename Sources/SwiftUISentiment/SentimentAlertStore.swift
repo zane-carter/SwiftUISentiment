@@ -9,25 +9,26 @@ import Foundation
 
 /// An internal helper class for managing whether sentiment alerts have been triggered, or how many times
 class SentimentAlertStore {
+    static private let userDefaults = UserDefaults.standard
     // MARK: Helpers
     /// Returns a `Bool` indicating if an alert with this `identifier` has been presented before
     static func alertTriggered(_ identifier: String) -> Bool {
-        UserDefaults.standard.bool(forKey: triggeredKey(identifier))
+        userDefaults.bool(forKey: triggeredKey(identifier))
     }
 
     /// Returns the amount of times as an `Int` that the trigger with the given `identifier` has been called
     static func triggerCount(_ identifier: String) -> Int {
-        UserDefaults.standard.integer(forKey: countKey(identifier))
+        userDefaults.integer(forKey: countKey(identifier))
     }
 
     /// Increment the trigger count for a given `identifier`
     static func incrementCount(_ identifier: String) {
-        UserDefaults.standard.set(triggerCount(identifier) + 1, forKey: countKey(identifier))
+        userDefaults.set(triggerCount(identifier) + 1, forKey: countKey(identifier))
     }
 
     /// Mark an alert as triggered
     static func markTriggered(_ identifier: String) {
-        UserDefaults.standard.set(true, forKey: triggeredKey(identifier))
+        userDefaults.set(true, forKey: triggeredKey(identifier))
     }
 
     // MARK: Support
