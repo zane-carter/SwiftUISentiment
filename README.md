@@ -9,6 +9,12 @@
 
 A simple SwiftUI modifier for collecting user sentiment. SwiftUISentiment works by showing a native alert with options that indicate the users sentiment (usually either positive or negative), which then navigate to a series of configurable option such as submitting a review, sharing on social media, sending an email or redirecting to a URL.
 
+<p>
+    <img src="Images/screenshot-1.png" height=600px>
+    <img src="Images/screenshot-2.png" height=600px>
+    <img src="Images/screenshot-3.png" height=600px>
+</p>
+
 ## Installation
 SwiftUISentiment is a Swift Package so to install it to your project, simply add it as a package dependancy with **File -> Add Packages**.
 
