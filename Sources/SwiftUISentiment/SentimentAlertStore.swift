@@ -19,6 +19,7 @@ class SentimentAlertStore {
     /// Mark an alert as triggered
     static func markTriggered(_ identifier: String) {
         userDefaults.set(true, forKey: triggeredKey(identifier))
+        userDefaults.synchronize()
     }
     
     /// Returns the amount of times as an `Int` that the trigger with the given `identifier` has been called
@@ -29,6 +30,7 @@ class SentimentAlertStore {
     /// Increment the trigger count for a given `identifier`
     static func incrementCount(_ identifier: String) {
         userDefaults.set(triggerCount(identifier) + 1, forKey: countKey(identifier))
+        userDefaults.synchronize()
     }
 
     // MARK: Support
