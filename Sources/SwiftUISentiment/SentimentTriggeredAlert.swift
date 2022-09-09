@@ -31,10 +31,10 @@ struct SentimentTriggeredAlert<Content: View>: View {
                     SentimentAlertStore.markTriggered(configuration.identifier)
                 /// If the trigger has been called the correct number of times, present the alert and increment the trigger count
                 case .count(let views):
+                    SentimentAlertStore.incrementCount(configuration.identifier)
                     if SentimentAlertStore.triggerCount(configuration.identifier) == views {
                         self.isPresented = true
                     }
-                    SentimentAlertStore.incrementCount(configuration.identifier)
                 }
             }
     }
