@@ -25,6 +25,7 @@ class SentimentAlertStore {
     /// Reset the scounttore for a given `identifier`
     static func resetCount(_ identifier: String) {
         userDefaults.set(0, forKey: key(identifier))
+        userDefaults.synchronize()
     }
 
     // MARK: Support
