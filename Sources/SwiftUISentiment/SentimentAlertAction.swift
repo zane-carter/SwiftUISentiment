@@ -77,7 +77,7 @@ extension SentimentAlertAction {
             application.open(url)
 
         case .review(_, appId: let appId):
-            if let reviewURL = URL(string: "itms-apps://itunes.apple.com/us/app/apple-store/\(appId)?mt=8"), application.canOpenURL(reviewURL) {
+            if let reviewURL = URL(string: "itms-apps://itunes.apple.com/us/app/apple-store/\(appId)?mt=8&action=write-review"), application.canOpenURL(reviewURL) {
                 application.open(reviewURL)
             }
 
