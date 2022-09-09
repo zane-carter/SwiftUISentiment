@@ -14,30 +14,16 @@ SwiftUISentiment is a Swift Package so to install it to your project, simply add
 
 **`https://github.com/zane-carter/SwiftUISentiment.git`**
 
+
+
 ## Usage
 To use SwiftUISentiment in your project, use the view modifier `sentimentAlert` on any view you'd like to display the sentiment alert on.
 
-### Manual (Binding)
-You can present a sentiment alert using your own SwiftUI Boolean binding. See an example below link to a `Button`.
-```swift
-struct ContentView: View {
-    @State var isPresented = false
-    var body: some View {
-        Button("Show Alert") {
-            self.isPresented.toggle()
-        }
-        .sentimentAlert(configuration: .example, isPresented: $isPresented)
-    }
-}
-```
-
-### Triggers
-If you'd like to present a sentiment alert after a certain amount of views for example, you can use a trigger.
 
 ### Configuration
 When creating a sentiment alert, you must provide a `SentimentAlertConfiguration`. This is where you specify the title, details, what options you would like to present the user. This is usually a few options with varying sentiments, usually positive and negative.
 
-A `SentimentAlertConfiguration` has quite a few options so it's best to create your configurations in an extension. 
+A `SentimentAlertConfiguration` can become quite big so it's best to create your configurations in an extension for code cleanliness. 
 
 ```swift
 extension SentimentAlertConfiguration {
@@ -66,9 +52,60 @@ extension SentimentAlertConfiguration {
 ```
 
 
+### Manual (Binding)
+You can present a sentiment alert using your own SwiftUI Boolean binding. See an example below link to a `Button`.
+```swift
+struct ContentView: View {
+    @State var isPresented = false
+    var body: some View {
+        Button("Show Alert") {
+            self.isPresented.toggle()
+        }
+        .sentimentAlert(configuration: .example, isPresented: $isPresented)
+    }
+}
+```
 
+### Triggers
+If you'd like to present a sentiment alert after a certain amount of views for example, you can use a trigger.
+
+**⚠️ Important ⚠️**
+
+Triggers use `UserDefaults` to track view counts. To reset the count during testing (or between version releases) then you can use the `reset` method on a `SentimentAlertConfiguration`
+```swift
+let configuration = SentimentAlertConfiguration.example
+configuration.reset()
+```
+
+**Trigger Once**
+```swift
+struct ContentView: View {
+    var body: some View {
+        Text("Trigger Example")
+            .sentimentAlert(configuration: .example, trigger: .once())
+    }
+}
+```
+
+**Trigger Once After 3 Views**
+```swift
+struct ContentView: View {
+    var body: some View {
+        Text("Trigger Example")
+            .sentimentAlert(configuration: .example, trigger: .once(after: 3))
+    }
+}
+```
+
+**Trigger Every 5 Views**
+```swift
+struct ContentView: View {
+    var body: some View {
+        Text("Trigger Example")
+            .sentimentAlert(configuration: .example, trigger: .repeating(every: 5))
+    }
+}
+```
 
 ## Contribution
-
-## License
-MIT...
+Contributions are welcome. Just create a PR and add me as a reviewer 😊
