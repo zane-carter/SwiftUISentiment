@@ -32,6 +32,8 @@ public struct SentimentAlertOption: Identifiable {
     var title: String
     /// The actions that this alert option will present the user with if selected
     var actions: [SentimentAlertAction]
+    /// A custom action to run when this `SentimentAlertOption` is selected
+    var selected: () -> Void = {}
 
     /// The identifier for the `SentimentAlertOption`
     public var id: String { title }

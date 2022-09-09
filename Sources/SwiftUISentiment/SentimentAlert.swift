@@ -41,6 +41,7 @@ struct SentimentAlert<Content: View>: View {
                             action: {
                                 DispatchQueue.main.async {
                                     self.option = option
+                                    self.option?.selected()
                                     self.optionPresented = true
                                 }
                             },
