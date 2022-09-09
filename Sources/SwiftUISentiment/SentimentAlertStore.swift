@@ -11,39 +11,28 @@ import Foundation
 class SentimentAlertStore {
     static private let userDefaults = UserDefaults.standard
     // MARK: Helpers
-    /// Returns a `Bool` indicating if an alert with this `identifier` has been presented before
-    static func alertTriggered(_ identifier: String) -> Bool {
-        userDefaults.bool(forKey: triggeredKey(identifier))
-    }
-    
-    /// Mark an alert as triggered
-    static func markTriggered(_ identifier: String) {
-        userDefaults.set(true, forKey: triggeredKey(identifier))
-        userDefaults.synchronize()
-    }
-    
     /// Returns the amount of times as an `Int` that the trigger with the given `identifier` has been called
     static func triggerCount(_ identifier: String) -> Int {
-        userDefaults.integer(forKey: countKey(identifier))
+        userDefaults.integer(forKey: key(identifier))
     }
 
     /// Increment the trigger count for a given `identifier`
     static func incrementCount(_ identifier: String) {
-        userDefaults.set(triggerCount(identifier) + 1, forKey: countKey(identifier))
+        userDefaults.set(triggerCount(identifier) + 1, forKey: key(identifier))
         userDefaults.synchronize()
+    }
+    
+    /// Reset the scounttore for a given `identifier`
+    static func resetCount(_ identifier: String) {
+        userDefaults.set(0, forKey: key(identifier))
     }
 
     // MARK: Support
     /// The prefix to use for keys marking alerts as presented and tallying trigger counts
     static var prefix: String { "com.swiftuisentiment" }
 
-    /// Returns a key to use with `UserDefaults` to mark an alert as presented
-    static private func triggeredKey(_ identifier: String) -> String {
-        "\(prefix).triggered.\(identifier)"
-    }
-
     /// Returns a key to use with `UserDefaults` to count the times a trigger has been called
-    static private func countKey(_ identifier: String) -> String {
+    static private func key(_ identifier: String) -> String {
         "\(prefix).count.\(identifier)"
     }
 }

@@ -21,24 +21,20 @@ struct SentimentTriggeredAlert<Content: View>: View {
     var body: some View {
         SentimentAlert(isPresented: $isPresented, configuration: configuration, content: content)
             .onAppear {
-                print(configuration.identifier)
-                print("APPEARED")
+                /// Increment the view count
+                SentimentAlertStore.incrementCount(configuration.identifier)
                 /// Depending on the trigger, either increment or set a flag, and if conditiions are met display the root sentiment alert
                 switch trigger {
                 /// If the triggered flag is not set, present the alert and then mark the flag as triggered
-                case .once:
-                    if !SentimentAlertStore.alertTriggered(configuration.identifier) {
-                        self.isPresented = true
-                    }
-                    SentimentAlertStore.markTriggered(configuration.identifier)
-                /// If the trigger has been called the correct number of times, present the alert and increment the trigger count
-                case .count(let views):
-                    print("Start: \(SentimentAlertStore.triggerCount(configuration.identifier))")
-                    SentimentAlertStore.incrementCount(configuration.identifier)
+                case .once(after: let views):
                     if SentimentAlertStore.triggerCount(configuration.identifier) == views {
                         self.isPresented = true
                     }
-                    print("After: \(SentimentAlertStore.triggerCount(configuration.identifier))")
+                /// If the trigger has been called the correct number of times, present the alert and increment the trigger count
+                case .repeating(every: let views):
+                    if SentimentAlertStore.triggerCount(configuration.identifier) % views == 0 {
+                        self.isPresented = true
+                    }
                 }
             }
     }
