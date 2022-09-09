@@ -7,7 +7,7 @@
 [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/iamzanecarter.svg?style=social&label=Follow%20Zane%20Carter)](https://twitter.com/iamzanecarter)
 
 
-A simple SwiftUI modifier for collecting user sentiment. SwiftUISentiment works by showing a native alert with options that indicate the users sentiment (usually either positive or negative), which then navigate to a series of configurable option such as submitting a review, sharing on social media, sending an email or redirecting to a URL.
+A simple SwiftUI modifier for collecting user sentiment. SwiftUISentiment works by showing a native alert with options that indicate the users sentiment (usually either positive or negative), which then navigate to a series of configurable actions such as submitting a review, sharing on social media, sending an email, or redirecting to a URL.
 
 <p>
     <img src="Images/screenshot-1.png" height=600px>
@@ -77,7 +77,12 @@ If you'd like to present a sentiment alert after a certain amount of views for e
 
 **⚠️ Important ⚠️**
 
-Triggers use `UserDefaults` to track view counts. To reset the count during testing (or between version releases) then you can use the `reset` method on a `SentimentAlertConfiguration`
+Triggers use `UserDefaults` and the `identifier` provided in the configuration to track view counts.
+It is important that the identifier is unique for each individual screen that you'd like view counts to be tracked on.
+Uses of the same configuration (and identifier) across the app will all count toward the tracking of view counts.
+
+
+To reset the count during testing (or between version releases) then you can use the `reset` method on a `SentimentAlertConfiguration`
 ```swift
 let configuration = SentimentAlertConfiguration.example
 configuration.reset()
@@ -112,6 +117,3 @@ struct ContentView: View {
     }
 }
 ```
-
-## Contribution
-Contributions are welcome. Just create a PR and add me as a reviewer 😊
