@@ -21,6 +21,8 @@ struct SentimentTriggeredAlert<Content: View>: View {
     var body: some View {
         SentimentAlert(isPresented: $isPresented, configuration: configuration, content: content)
             .onAppear {
+                print(configuration.identifier)
+                prnit("APPEARED")
                 /// Depending on the trigger, either increment or set a flag, and if conditiions are met display the root sentiment alert
                 switch trigger {
                 /// If the triggered flag is not set, present the alert and then mark the flag as triggered

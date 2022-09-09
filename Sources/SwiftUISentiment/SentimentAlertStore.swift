@@ -15,7 +15,12 @@ class SentimentAlertStore {
     static func alertTriggered(_ identifier: String) -> Bool {
         userDefaults.bool(forKey: triggeredKey(identifier))
     }
-
+    
+    /// Mark an alert as triggered
+    static func markTriggered(_ identifier: String) {
+        userDefaults.set(true, forKey: triggeredKey(identifier))
+    }
+    
     /// Returns the amount of times as an `Int` that the trigger with the given `identifier` has been called
     static func triggerCount(_ identifier: String) -> Int {
         userDefaults.integer(forKey: countKey(identifier))
@@ -26,14 +31,9 @@ class SentimentAlertStore {
         userDefaults.set(triggerCount(identifier) + 1, forKey: countKey(identifier))
     }
 
-    /// Mark an alert as triggered
-    static func markTriggered(_ identifier: String) {
-        userDefaults.set(true, forKey: triggeredKey(identifier))
-    }
-
     // MARK: Support
     /// The prefix to use for keys marking alerts as presented and tallying trigger counts
-    static var prefix: String { "com.zanecarter.swiftui.sentiment" }
+    static var prefix: String { "com.swiftuisentiment" }
 
     /// Returns a key to use with `UserDefaults` to mark an alert as presented
     static private func triggeredKey(_ identifier: String) -> String {
