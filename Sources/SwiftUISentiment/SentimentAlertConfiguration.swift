@@ -39,6 +39,7 @@ public struct SentimentAlertOption: Identifiable {
     /// For a positive sentiment this might be "Yes" or "I like it"
     var title: String
     /// The actions that this alert option will present the user with if selected
+    /// - Note: You should make sure to include a `close` action in most cases 
     var actions: [SentimentAlertAction]
     /// A custom action to run when this `SentimentAlertOption` is selected
     var selected: () -> Void = {}

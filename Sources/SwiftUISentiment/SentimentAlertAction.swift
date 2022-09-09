@@ -21,6 +21,8 @@ public enum SentimentAlertAction: Identifiable {
     case review(_ label: String, appId: String)
     /// Performs a custom action
     case custom(_ label: String, action: () -> Void)
+    /// Close the action list
+    case close(_ label: String)
 
     /// The `rawValue`
     private var rawValue: String {
@@ -29,7 +31,7 @@ public enum SentimentAlertAction: Identifiable {
         case .email(_, address: let address): return "email-\(address)"
         case .website(_, url: let url): return "website-\(url.absoluteString)"
         case .review(_, appId: let appId): return "review-\(appId)"
-        case .custom(let label, action: _): return label
+        case .custom(let label, action: _), .close(let label): return label
         }
     }
 
@@ -44,6 +46,7 @@ public enum SentimentAlertAction: Identifiable {
         case .website(let label, url: _): return label
         case .review(let label, appId: _): return label
         case .custom(let label, action: _): return label
+        case .close(let label): return label
         }
     }
 }
@@ -80,6 +83,9 @@ extension SentimentAlertAction {
 
         case .custom(_, action: let action):
             action()
+
+        case .close(_):
+            return
         }
     }
 }
