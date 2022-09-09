@@ -26,11 +26,9 @@ struct SentimentAlert<Content: View>: View {
             /// The secondary step showing an option and its various action
             .alert(option?.label ?? "", isPresented: $optionPresented, presenting: option, actions: { option in
                 ForEach(option.actions) { action in
-                    Button(action: { action.execute() }) {
-                        switch action {
-                        case .close(_): Text(action.label)
-                        default: Text(action.label).bold()
-                        }
+                    switch action {
+                    case .close(_): Button(role: .cancel, action: {}, label: { Text(action.label) })
+                    default: Button(role: .none, action: { action.execute() }, label: { Text(action.label)})
                     }
                 }
             })
