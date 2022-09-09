@@ -38,7 +38,7 @@ public struct SentimentAlertConfiguration {
     
     /// Reset the trigger count for this configurations `identifier`
     /// - Note: This will reset the stored trigger counts for this configurations `identifier` which means alerts will show again
-    func reset() {
+    public func reset() {
         SentimentAlertStore.resetCount(identifier)
     }
 }
