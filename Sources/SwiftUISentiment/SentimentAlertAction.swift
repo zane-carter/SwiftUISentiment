@@ -38,8 +38,8 @@ public enum SentimentAlertAction: Identifiable {
     /// The `id` used to identify this `SentimentAlertAction`
     public var id: String { rawValue }
 
-    /// The name to display in the alert for this `SentimentAlertAction` button
-    public var name: String {
+    /// The label to display in the alert for this `SentimentAlertAction` button
+    public var label: String {
         switch self {
         case .twitter(let label, handle: _): return label
         case .email(let label, address: _): return label
@@ -53,7 +53,7 @@ public enum SentimentAlertAction: Identifiable {
 
 // MARK: Actions
 extension SentimentAlertAction {
-    /// Execute the appropriate action or ULR open for this `SentimentAlertAction`
+    /// Execute the appropriate action for this `SentimentAlertAction`
     func execute() {
         let application = UIApplication.shared
 
